@@ -1,0 +1,285 @@
+Docker All Practise: Khaja Sir’s Class:
+>>
+curl -fsSL https://get.docker.com -o install-docker.sh
+sh install-docker.sh
+docker info
+sudo docker info
+Cat /etc/group
+Whoami
+Docker info 
+sudo usermod -aG docker <user-name>
+# exit
+# relogin
+Docker info 
+
+Docker container run hello-world
+Again>
+Docker container run hello-world
+Docker container run -d alpine
+Again>
+Docker container run -d alpine
+docker image ls
+--Generations
+Docker images
+Docker image ls
+Docker ps -a
+Docker container ls -a
+--
+Docker –help
+Docker image –- help
+Docker image ls –- help
+Docker container – help
+
+Docker container rm –- help
+Docker cheat sheer >> helpful for find out the commands
+Docker network – help
+Docker network create – help
+Docker volume –- help
+Figure out docker commands
+•	create a docker network > docker network create
+•	list docker volumes > docker volume ls
+•	stop the docker container > docker stop my_container
+•	remove the docker image > docker image rm
+•	build the docker image > docker image build
+•	start all the containers using docker compose > docker compose up -d
+•	stop all the containers docker compose > docker compose stop
+ps
+04/01/2023:
+Java -version
+Docker container run -it openjdk:11 /bin/bash
+Java -version >> inside container
+Cat /etc/passwd
+Docker container run -it alpine /bin/sh
+Cat /etc/passwd >> inside container
+ps aux - it is on docker host
+docker container run -it alpine /bin/sh
+ps aux
+df -h
+exit
+df -h
+ip addr
+docker container run -it alpine /bin/sh
+ip addr >> inside Container
+docker container run -d –name test1 httpd
+docker container run -d –name test2 –-m httpd
+docker container run -d –name test2 –memory 128M httpd
+docker status
+docker container run -it openjdk:11 /bin/bash
+whereis java >> inside
+docker container run -it openjdk:8 /bin/bash
+whereis java
+exit
+docker container run –help
+Port forwarding:
+docker container run -p 32000:80 -d nginx
+docker container ls
+one more for same port, it will fails
+docker container run -p 32000:80 -d nginx
+docker container rm -f $(docker container ls -a -q)
+docker container run -d -P nginx
+docker container ls
+docker container run -d -P nginx
+docker container ls
+
+docker container run -d -P nginx  >> Name or Port automictically. 
+docker container ls
+docker container run –help
+docker container -d -P –- name webapp1 nginx
+docker container ls
+Date: 05-01-2023
+docker container run --name apache -d -P httpd
+docker container ls
+docker container stop apache
+docker container rm apache (we can do only container is in stopped state)
+docker container rm -f apache (forceful deletion)
+
+docker container run --name nginx -d -P nginx
+docker container ls
+docker container stop nginx
+docker container rm nginx
+
+docker container rm -f nginx
+--
+Docker container run –- name mysql -d -P mysql
+Docker container ls
+
+Run this is an above process
+•	mysql
+•	postgres
+•	mongodb
+
+DATE: 06-01-2023
+sudo apt update && sudo apt install apache2 -y
+
+sudo apt install apache2
+sudo systemctl status apache2
+curl http://localhost
+cd /var/www/html/
+ls
+sudo mv index.html index
+sudo vi 
+
+--
+Docker container run -d -P – name mycontainer -it httpd /bin/bash
+
+Docker container exec -it <name/id> /bin/bash
+# creates the container and runs in the background
+docker container run -d -P --name mycontainer httpd
+
+docker container exec -it mycontainer /bin/bash
+ls
+cd htdocs/
+ls > index.html
+cat index.html
+echo "<h1> This is my home page </h1>" > /usr/local/apache2/htdocs/index.html
+docker container –help
+docker container commit –help
+docker container commit mycontainer myfirstimage
+docker image ls
+docker container run –name first container -d -P myfirstimage
+docker container ls
+docker container exec firstcontainer pwd
+--------------\
+Dockerfile :
+Mkdir myfirstimage
+Cd myfirstimage
+Vi dockerfile
+FROM httpd
+EXPOSE 80
+RUN echo "<h1> This is my home page </h1>" >  /usr/local/apache2/htdocs/index.html
+
+Docker image build -t myfirst:1.0 .
+Docker image ls
+Docker container run -d -P – name first myfirst:1.0
+Manual Steps:
+1VM with ports all enabled
+sudo apt update && sudo apt install apache2 -y
+
+ctrls@manualtest:/var/www$ cd html
+ctrls@manualtest:/var/www/html$ ls
+index.html
+ctrls@manualtest:/var/www/html$ sudo mv index.html index-orig.html
+ctrls@manualtest:/var/www/html$ sudo vi index.html
+<h1> Bokkalo image ni edit chesanu but congraguation to edit </h1>
+Browse the page:
+--
+Manual approach using containers
+docker container run -d -P --name mycontainer httpd
+docker container exec -it mycontainer /bin/bash
+ls 
+cd htdocs
+echo "<h1> This is my home page </h1>" > index.html
+browse the page and check the validation:
+•	Now create a image from container
+docker container commit mycontainer firstimage
+
+docker container run –name firstcontainer -d -P myfirstimage
+docker container exec -it firstcontainer /bin/bash
+# cd htdocs
+Cat index.html
+
+echo "<h1> Khaja Sir Class understood as of now</h1>" > index.html
+Browser Refresh adnd edited:
+Docker container stop mycontainer myfirstcontainer
+Docker container rm mycontainer myfirstcontainer
+Or 
+docker container rm -f $(docker container ls -a -q)
+To delete images:
+docker image ls
+docker image ls -q
+docker image rm $(docker image ls -q)
+Docker File:
+Cd myfirstimage
+Vi dockerfile
+--
+FROM httpd
+EXPOSE 80
+RUN echo "<h1> This is my home page </h1>" >  /usr/local/apache2/htdocs/index.html
+--
+Docker image build -t myfirst:1.0 .
+Docker image ls
+Docker container run -d -P –name firstcontainer myfirst
+Browse the Page and see the result
+Cat dockerfile
+Mkdir test
+Vi dockerfile
+--
+From httpd
+
+Docker image build -t test:1.0 .
+Docker image ls
+Docker image pull httpd (# it is not downloding)
+Docker image ls
+
+--
+From scratch
+
+Docker image build -t test:1.1 .
+Docker image ls
+
+Docker container run -d -P test:1.0
+Docker container rm -f $(docker container ls -a -q)
+
+Docker container 
+
+From httpd:2.4.58
+
+FROM httpd:2.4.58
+RUN  echo "hello"
+
+Docker image build -t test3.0 .
+Docker image ls
+FROM httpd:2.4.58
+RUN  touch 1.txt
+
+docker image build -t test3.1 .
+docker image ls
+
+Spring Petclinec: 1.35.00.
+
+$ docker container run -it amazoncorretto:17-alpine3.17-jdk /bin/sh
+wget https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/spring-petclinic-3.1.0-SNAPSHOT.jar
+wget – version
+curl – version
+java -jar spring
+docker container run -d alpine sleep 10
+docker container ls
+
+docker image build -t spc:1.0 .
+docker image ls
+docker container run -d -P –- name myspc spc:1.0
+docker container ls
+FROM httpd:2.4.58
+RUN  echo "hello"
+
+FROM httpd:2.4.58
+RUN  touch 1.txt
+
+Game of life War:
+
+docker image build -t gol:1.0 .
+docker image ls
+docker container run -d -P – name gol gol:1.0
+docker container ls
+
+resfresh the browser
+/gameoflife
+Cp Dockerfile mydockerfile 
+>> Replce with Copy ./gameoflif
+Docker image build –- help
+Docker image build -f mydockerfile -t gol:other .
+docker container run -d -P – name golother gol:other
+
+--
+Docker container run -d -P – name sample1 nginx
+Docker container run -d -P – name sample2 tomcat:9-jdk8
+Docker container run -d -P – name sample3 jenkins/jenkins
+Docker container ls
+Docker container rm -rf gol
+Docker container exec sample1 pwd
+>/
+Docker container exec sample2 pwd
+>/user/local/tomcat
+Docker container exec sample3 pwd
+>/
+------------------------------------------------------------
