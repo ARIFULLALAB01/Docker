@@ -283,3 +283,42 @@ Docker container exec sample2 pwd
 Docker container exec sample3 pwd
 >/
 ------------------------------------------------------------
+Modify the Dockerfiles
+Springpetclinic>>
+FROM amazoncorretto:17-alpine3.17-jdk
+LABEL author="khaja" 
+LABEL project="learning"
+ADD https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/spring-petclinic-3.1.0-SNAPSHOT.jar /spc/spring-petclinic-3.1.0-SNAPSHOT.jar
+WORKDIR /spc
+EXPOSE 8080
+CMD ["java", "-jar", "spring-petclinic-3.1.0-SNAPSHOT.jar"]
+
+#FROM amazoncorretto:17-alpine3.17-jdk
+#LABEL author="khaja" 
+#LABEL project="learning"
+#RUN wget https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/spring-petclinic-3.1.0-SNAPSHOT.jar
+#EXPOSE 8080
+#CMD ["java", "-jar", "spring-petclinic-3.1.0-SNAPSHOT.jar"]
+
+docker image build -t spc:1.0 .
+docker image ls
+docker container run -d -P – name spcnew spc:1.0
+
+docker container exec sample1 whoami
+docker container exec sample2 whoami
+docker container exec sample3 whoami
+docker container exec sample4 whoami
+## USER Concept:
+>>>>>
+Edit the spring petclinc Dockerfile
+
+Docker image build -t spc:nonroot .
+Docker container rm -f sample4
+Docker container run -d – name sample4 -P spc:nonroot
+Docker container ls
+Docker container logs sample4
+Docker stats
+Docker container exec sample4 pwd 
+Docker container exec sample4 whoami
+----------------
+## Parametrization:
