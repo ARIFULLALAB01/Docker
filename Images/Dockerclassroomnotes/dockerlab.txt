@@ -322,3 +322,56 @@ Docker container exec sample4 pwd
 Docker container exec sample4 whoami
 ----------------
 ## Parametrization:
+
+
+
+
+----------
+IMAGE Layers:
+
+Docker image pull python:slim
+Docker image pull openjdk:8
+Docker image pull openjdk:11
+Docker image pull alpine
+Mkdir exp
+Cd exp/
+Vi dockerfile
+>
+FROM alpine
+RUN touch 1.txt
+Docker image build -t exp:1.0 .
+Vi dockerfile
+>
+FROM alpine
+RUN touch 1.txt
+ADD https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/gameoflife.war /gameoflife.war
+
+Docker image build -t exp:2.0 .
+Docker image ls
+Docker image inspect alpine : sha256:d4fc045c9e
+>> write Down the layer 
+Docker image inspect exp:1.0
+>> write down the layer :: 
+sha256:d4fc045c9e
+sha256:191f293290
+Dcker image inspect exp:2.0
+>> write down the layer
+sha256:d4fc045c9e3a848011de66f34b81f052d4f2c15a17bb196d637e526349601820",              sha256:191f29329068e47e46ac08709515e8ae8ddb7e246eaf5b2d7140d3afce3ee40f",                sha256:d318847c9d68fcbd5f80f6800caea12b97a6cdc3a500c7b64f2f8283899c9f0e"
+Docker image pull openjdk:17
+Docker image pill openjdk:11
+Docker image pull openjdk:8
+>>
+Docker container run -it exp:2.0 /bin/sh
+Touch 2.txt
+Rm 1.txt
+Rm gameoflife.war
+--------------
+FROM alpine
+RUN apk add java
+RUN touch 1.txt
+Or
+RUN apk add java && touch 1.txt
+
+
+
+
